@@ -1,18 +1,18 @@
 /*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-The elevation, heart rate, and pace of a hike plotted on a graph.
-*/
+ See LICENSE folder for this sample’s licensing information.
+ 
+ Abstract:
+ The elevation, heart rate, and pace of a hike plotted on a graph.
+ */
 
 import SwiftUI
 
 func rangeOfRanges<C: Collection>(_ ranges: C) -> Range<Double>
     where C.Element == Range<Double> {
-    guard !ranges.isEmpty else { return 0..<0 }
-    let low = ranges.lazy.map { $0.lowerBound }.min()!
-    let high = ranges.lazy.map { $0.upperBound }.max()!
-    return low..<high
+        guard !ranges.isEmpty else { return 0..<0 }
+        let low = ranges.lazy.map { $0.lowerBound }.min()!
+        let high = ranges.lazy.map { $0.upperBound }.max()!
+        return low..<high
 }
 
 func magnitude(of range: Range<Double>) -> Double {
@@ -26,7 +26,7 @@ struct HikeGraph: View {
     var color: Color {
         switch path {
         case \.elevation:
-            return .gray
+            return Color(hue: 0.6, saturation: 0.73, brightness: 0.7)
         case \.heartRate:
             return Color(hue: 0, saturation: 0.5, brightness: 0.7)
         case \.pace:
@@ -41,7 +41,7 @@ struct HikeGraph: View {
         let overallRange = rangeOfRanges(data.lazy.map { $0[keyPath: self.path] })
         let maxMagnitude = data.map { magnitude(of: $0[keyPath: path]) }.max()!
         let heightRatio = 1 - CGFloat(maxMagnitude / magnitude(of: overallRange))
-
+        
         return GeometryReader { proxy in
             HStack(alignment: .bottom, spacing: proxy.size.width / 120) {
                 ForEach(data.indices) { index in
@@ -50,7 +50,7 @@ struct HikeGraph: View {
                         height: proxy.size.height,
                         range: data[index][keyPath: self.path],
                         overallRange: overallRange)
-                    .colorMultiply(self.color)
+                        .colorMultiply(self.color)
                 }
                 .offset(x: 0, y: proxy.size.height * heightRatio)
             }
@@ -70,3 +70,5 @@ struct HikeGraph_Previews: PreviewProvider {
         }
     }
 }
+
+

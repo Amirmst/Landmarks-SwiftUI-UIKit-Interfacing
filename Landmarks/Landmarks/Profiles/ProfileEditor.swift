@@ -1,9 +1,10 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-An editable profile view.
-*/
+//
+//  ProfileEditor.swift
+//  Landmarks
+//
+//  Created by Amir Mostafavi on 12/26/19.
+//  Copyright © 2019 Apple. All rights reserved.
+//
 
 import SwiftUI
 
@@ -20,7 +21,9 @@ struct ProfileEditor: View {
         List {
             HStack {
                 Text("Username").bold()
+                
                 Divider()
+                
                 TextField("Username", text: $profile.username)
             }
             
@@ -33,7 +36,7 @@ struct ProfileEditor: View {
                 
                 Picker("Seasonal Photo", selection: $profile.seasonalPhoto) {
                     ForEach(Profile.Season.allCases, id: \.self) { season in
-                        Text(season.rawValue).tag(season)
+                        Text("\(season.rawValue)").tag(season)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
@@ -42,11 +45,8 @@ struct ProfileEditor: View {
             
             VStack(alignment: .leading, spacing: 20) {
                 Text("Goal Date").bold()
-                DatePicker(
-                    "Goal Date",
-                    selection: $profile.goalDate,
-                    in: dateRange,
-                    displayedComponents: .date)
+                DatePicker("Goal Date", selection: $profile.goalDate, in: dateRange, displayedComponents: .date)
+                    .labelsHidden()
             }
             .padding(.top)
         }
@@ -58,3 +58,4 @@ struct ProfileEditor_Previews: PreviewProvider {
         ProfileEditor(profile: .constant(.default))
     }
 }
+
